@@ -1,0 +1,9 @@
+- hosts: web
+  tasks:
+  - name: "register kernel version"
+    shell: "uname -r"
+    register: kernel_version
+
+  - name: "Pring kernel version"
+    debug:
+      msg: "{{ kernel_version.stdout }}"
