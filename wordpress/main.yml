@@ -1,0 +1,13 @@
+- hosts: all
+  tasks:
+  # - include_tasks: php.yml
+  #   when: group_names.0 == "web"
+  
+  # - include_tasks: apache.yml
+  #   when: group_names.0 == "web"
+  
+  - include_tasks: wordpress.yml
+    when: group_names.0 == "web"
+
+  # - include_tasks: mysql.yml
+  #   when: group_names.0 == "db"

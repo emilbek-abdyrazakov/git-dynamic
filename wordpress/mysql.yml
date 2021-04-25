@@ -1,0 +1,44 @@
+- name: install httpd
+  package:
+    name: httpd
+    state: latest
+
+- name: start httpd
+  systemd:
+    state: started
+    name: httpd
+    enabled: yes
+
+- name: install MariaDB
+  package:
+    name: mariadb-server
+    state: latest
+
+- name: install MySQL Client
+  package:
+    name: mariadb
+    state: latest
+
+- name: start mariadb
+  systemd:
+    state: started
+    name: mariadb
+    enabled: yes
+
+- name: Check if WordPress Database exists
+  shell: 'mysql -e "SHOW DATABASES;" | grep wordpress'
+  register: db_status
+  ignore_errors: True
+
+- name: Create a new datebase for WordPress
+  shell: 'mysql -e "CREATE DATABASE wordpress;"'
+  when: db_status != 'wordpress' 
+
+- name: Create a user and login
+  shell: "GRANT ALL ON wordpress.* TO 'wpuser'@'%' IDENTIFIED BY 'MYP@SS';"
+  when: db_status != 'wordpress' 
+
+# - name: Create a new database for WordPress
+#   mysql_db:
+#     name: wordpress
+#     state: present

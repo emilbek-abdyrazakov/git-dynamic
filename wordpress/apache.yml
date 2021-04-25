@@ -1,0 +1,25 @@
+- name: install php
+  package:
+    name: php
+    state: latest
+    
+- name: install httpd
+  package:
+    name: httpd
+    state: latest
+
+- name: start httpd
+  systemd:
+    state: started
+    name: httpd
+    enabled: yes
+
+- name: install MariaDB
+  package:
+    name: mariadb-server
+    state: latest
+
+- name: install MySQL Client
+  package:
+    name: mariadb
+    state: latest
